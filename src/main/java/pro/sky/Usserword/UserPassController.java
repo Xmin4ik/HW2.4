@@ -17,7 +17,7 @@ public class UserPassController {
         return userPassInterface.hello();
     }
 
-
+    @GetMapping(path ="/user")
     public String tryLogin(@RequestParam() String login, String password, String confirmPassword) {
 
         try {
