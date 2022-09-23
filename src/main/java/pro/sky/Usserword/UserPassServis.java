@@ -1,8 +1,7 @@
 package pro.sky.Usserword;
 
 import org.springframework.stereotype.Service;
-
-@Service
+        @Service
 public class UserPassServis implements UserPassInterface {
     public String hello() {
         return "<b>hello world</b>";
