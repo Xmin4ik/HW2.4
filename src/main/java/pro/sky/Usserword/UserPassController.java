@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static pro.sky.Usserword.UserPassServis.chekLogAndPass;
+
 @RestController
 public class UserPassController {
     private final UserPassInterface userPassInterface;
@@ -17,19 +19,18 @@ public class UserPassController {
         return userPassInterface.hello();
     }
 
-    @GetMapping(path ="/user")
+    @GetMapping(path = "/user")
     public String tryLogin(@RequestParam() String login, String password, String confirmPassword) {
-
         try {
-            return userPassInterface.tryLogin(login, password, confirmPassword);
-
-        } catch (WrongLoginException e) {
-            return "введены не верные параметры";
-        } catch (WrongPasswordException r) {
-            return "введены не верные параметры";
+            chekLogAndPass(login, password, confirmPassword);
+        } catch (WrongLoginException | WrongPasswordException e) {
+                       System.out.println(e.getMessage());
+            return e.getMessage();
+        } finally {
+            System.out.println("Работа метода закончена");
         }
-
-        finally {System.out.println("Работа метода закончена");}
-
+        return "Введены верные параметры";
     }
+
+
 }

@@ -1,24 +1,29 @@
 package pro.sky.Usserword;
 
 import org.springframework.stereotype.Service;
-        @Service
+
+@Service
 public class UserPassServis implements UserPassInterface {
+    private static final String symbol = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789_";
+
     public String hello() {
         return "<b>hello world</b>";
     }
 
-    private static final String symbol = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789._~";
-
-    public boolean tryLogin(String login, String password, String confirmPassword) {
+    public String tryLogin(String login, String password, String confirmPassword) {
         try {
             chekLogAndPass(login, password, confirmPassword);
         } catch (WrongLoginException | WrongPasswordException e) {
-            return false;
+            System.out.println(e.getMessage());
+
+            return e.getMessage();
+        } finally {
+            System.out.println("Работа метода закончена");
         }
-        return true;
+        return "Введены верные параметры";
     }
 
-    private static void chekLogAndPass(String login, String password, String confirmPassword
+    protected static void chekLogAndPass(String login, String password, String confirmPassword
 
     ) throws WrongLoginException, WrongPasswordException {
 
@@ -32,12 +37,11 @@ public class UserPassServis implements UserPassInterface {
             throw new WrongPasswordException("Пароль не подтвержден");
         }
         chekSymbols(login, true);
+        chekSymbols(password, false);
     }
-
-    private static void chekSymbols(String insert, boolean isLogin) throws WrongLoginException, WrongPasswordException {
-        // Я в начале так думал сделать, но у меня в голове как это сделать не составилось  	(｡╯︵╰｡)
+    protected static void chekSymbols(String insert, boolean isLogin) throws WrongLoginException, WrongPasswordException {
         for (int i = 0; i < insert.length(); i++) {
-            if (symbol.contains(String.valueOf(insert))) {
+            if (!symbol.contains(String.valueOf(insert.charAt(i)))) {
                 if (isLogin) {
                     throw new WrongLoginException("Использован недопустимый символ - " + insert.charAt(i));
                 } else {
