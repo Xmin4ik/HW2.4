@@ -1,13 +1,13 @@
-package pro.sky.metodcalc;
+package pro.sky.Usserword;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UsserPass {
+public class UsserPassApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UsserPass.class, args);
+		SpringApplication.run(UsserPassApplication.class, args);
 	}
 
 }
